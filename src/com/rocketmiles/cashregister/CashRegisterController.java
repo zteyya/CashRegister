@@ -47,9 +47,7 @@ public class CashRegisterController extends Constants{
                 break;
 
             case CHANGE:
-                if (processChange(saUserInput)) {
-                    MyView.showCashDetails(MyModel.getTotalCashValue(), MyModel.iaMoney);
-                }
+                processChange(saUserInput);
                 break;
 
             case EXIT:
@@ -168,6 +166,8 @@ public class CashRegisterController extends Constants{
 
         if (iaChange != null) {
             // This means, change can be performed
+            MyView.showChange(iaChange);
+
             for (int i = 0; i < NUM_DENOMINATION_TYPE; i++) {
                 MyModel.deductBills(i, iaChange[i]);
             }

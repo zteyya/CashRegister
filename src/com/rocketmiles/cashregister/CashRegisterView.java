@@ -11,9 +11,6 @@ public class CashRegisterView extends Constants {
         System.out.println(MESSAGE_WELCOME);
     }
     
-    protected String getMessage() {
-        return MESSAGE_WELCOME;
-    }
     
     protected void showWelcomeMessage() {
         System.out.println("===========================");
@@ -53,14 +50,26 @@ public class CashRegisterView extends Constants {
 
     /* This method displays a detailed view of the cash register */
     protected void showCashDetails(int totalCashValue, int[][] iaMoney) {
-        
-        for(int i = 0; i < NUM_DENOMINATION_TYPE; i++) {
-            System.out.print("\tDenomination: " + iaMoney[DENOMINATION_INDEX][i]);
-            System.out.println(" Quantity: " + iaMoney[BILL_COUNT_INDEX][i]);
-        }
-        System.out.println("\t-----------------------------");
-        System.out.println("\tTotal: $" + totalCashValue);
+        String sData = "$" + totalCashValue;
 
+        for (int i=0; i < NUM_DENOMINATION_TYPE; i++) {
+            sData = sData + " " + iaMoney[BILL_COUNT_INDEX][i];
+        }
+
+        System.out.println(sData);
+    }
+    
+    /* This method displays the number of bills per denomination for change*/
+    protected void showChange(int[] iaChange) {
+
+        for (int i=0; i < iaChange.length; i++) {
+            System.out.print(iaChange[i]);
+            if (i != iaChange.length - 1) {
+                System.out.print(" ");
+            } else {
+                System.out.println();
+            }
+        }
     }
 
     protected void showExitMessage() {

@@ -10,8 +10,8 @@ public class CashRegisterView extends Constants {
     protected void showCashierValue() {
         System.out.println(MESSAGE_WELCOME);
     }
-    
-    
+
+
     protected void showWelcomeMessage() {
         System.out.println("===========================");
         System.out.println(MESSAGE_WELCOME);

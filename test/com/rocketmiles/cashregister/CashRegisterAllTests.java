@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ 
-    //CashRegisterControllerTest.class, 
+    CashRegisterControllerTest.class, 
     CashRegisterModelTest.class })
 public class CashRegisterAllTests {
 

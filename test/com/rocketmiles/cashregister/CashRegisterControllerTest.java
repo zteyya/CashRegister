@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -29,7 +30,7 @@ public class CashRegisterControllerTest extends Constants{
 
     @Before
     public void setUp() throws Exception {
-        cashregister = new CashRegisterController();
+        //cashregister = CashRegisterController.class.newInstance();
     }
 
     @After
@@ -53,9 +54,16 @@ public class CashRegisterControllerTest extends Constants{
         // Tell Java to use your special stream
         System.setOut(psNew);
 
-        Class<CashRegisterController> privateClass = CashRegisterController.class;
-        Method privateMethodAccessor;
         try {
+            //Class<?> privateClass = cashregister.getClass();
+            Class<?> privateClass = Class.forName(CashRegisterController.class.getName());
+            Constructor<?> privateConstructor = privateClass.getConstructor(String.class);
+            Object object = privateConstructor.newInstance(new Object[] {null});
+
+            cashregister = (CashRegisterController) object;
+
+            Method privateMethodAccessor;
+            
             privateMethodAccessor = privateClass.getDeclaredMethod("processAddCash", Array.newInstance(String.class, input1.length).getClass());
             privateMethodAccessor.setAccessible(true);
 
@@ -84,7 +92,7 @@ public class CashRegisterControllerTest extends Constants{
             System.out.flush();
             System.setOut(psOld);
 
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | ClassNotFoundException | InstantiationException e) {
             e.printStackTrace();
         }
     }
@@ -106,10 +114,15 @@ public class CashRegisterControllerTest extends Constants{
         // Tell Java to use your special stream
         System.setOut(psNew);
 
-
-        Class<CashRegisterController> privateClass = CashRegisterController.class;
-        Method privateMethodAccessor;
         try {
+            //Class<?> privateClass = cashregister.getClass();
+            Class<?> privateClass = Class.forName(CashRegisterController.class.getName());
+            Constructor<?> privateConstructor = privateClass.getConstructor(String.class);
+            Object object = privateConstructor.newInstance(new Object[] {null});
+
+            cashregister = (CashRegisterController) object;
+
+            Method privateMethodAccessor;
 
             privateMethodAccessor = privateClass.getDeclaredMethod("processDeductCash", Array.newInstance(String.class, input1.length).getClass());
             privateMethodAccessor.setAccessible(true);
@@ -166,7 +179,7 @@ public class CashRegisterControllerTest extends Constants{
             System.out.flush();
             System.setOut(psOld);
 
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | ClassNotFoundException | InstantiationException e) {
             e.printStackTrace();
         }
     }
@@ -189,10 +202,16 @@ public class CashRegisterControllerTest extends Constants{
         // Tell Java to use your special stream
         System.setOut(psNew);
 
-        Class<CashRegisterController> privateClass = CashRegisterController.class;
-        Method privateMethodAccessor;
-
         try {
+            //Class<?> privateClass = cashregister.getClass();
+            Class<?> privateClass = Class.forName(CashRegisterController.class.getName());
+            Constructor<?> privateConstructor = privateClass.getConstructor(String.class);
+            Object object = privateConstructor.newInstance(new Object[] {null});
+
+            cashregister = (CashRegisterController) object;
+
+            Method privateMethodAccessor;
+
             privateMethodAccessor = privateClass.getDeclaredMethod("processChange", Array.newInstance(String.class, input1.length).getClass());
             privateMethodAccessor.setAccessible(true);
 
@@ -245,7 +264,7 @@ public class CashRegisterControllerTest extends Constants{
             System.out.flush();
             System.setOut(psOld);
 
-        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | ClassNotFoundException | InstantiationException e) {
             e.printStackTrace();
         }
 

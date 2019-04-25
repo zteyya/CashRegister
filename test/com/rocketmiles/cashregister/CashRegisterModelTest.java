@@ -135,7 +135,7 @@ public class CashRegisterModelTest extends Constants {
         /* Test when total number of bills equal to empty */
         // set total number of bills to add equal to 0 (min)
         assertEquals(true, model.isAllowedToAdd(0));
-        
+
         // set total number of bills to add equal to 1 (min + 1)
         assertEquals(true, model.isAllowedToAdd(1));
 
@@ -157,7 +157,7 @@ public class CashRegisterModelTest extends Constants {
 
         // set total number of bills to add equal to 0 (min)
         assertEquals(true, model.isAllowedToAdd(0));
-        
+
         // set total number of bills to add equal to 1 (min + 1)
         assertEquals(true, model.isAllowedToAdd(1));
 
@@ -172,12 +172,12 @@ public class CashRegisterModelTest extends Constants {
         for (int i = 0; i < NUM_DENOMINATION_TYPE; i++) {
             model.addBills(i, iQuantity);
         }
-        
+
         assertEquals(MAX_NUM_BILLS, model.getTotalNumberOfBills());
-        
+
         // set total number of bills to add equal to 0 (min)
         assertEquals(true, model.isAllowedToAdd(0));
-        
+
         // set total number of bills to add equal to 1 (min + 1)
         assertEquals(false, model.isAllowedToAdd(1));
 
@@ -263,16 +263,52 @@ public class CashRegisterModelTest extends Constants {
         iaActualChange = model.doChange(model.getTotalCashValue());
 
         assertArrayEquals(iaExpectedChange, iaActualChange);
-        
+
         // deduct bills
         for (int i = 0; i < NUM_DENOMINATION_TYPE; i++) {
             model.deductBills(i, iaExpectedChange[i]);
         }
-        
+
         // verify that the bills are deducted
         for (int i = 0; i < NUM_DENOMINATION_TYPE; i++) {
             assertEquals(0, model.iaMoney[BILL_COUNT_INDEX][i]);
         }
+
+        // set cash registry: $331 6 11 1 48 0
+        model.setBillCount(TWENTY_DOLLARS, 6);
+        model.setBillCount(TEN_DOLLARS, 11);
+        model.setBillCount(FIVE_DOLLARS, 1);
+        model.setBillCount(TWO_DOLLARS, 48);
+        model.setBillCount(ONE_DOLLARS, 0);
+
+        // ask for change
+        iaActualChange = model.doChange(101);
+
+        iaExpectedChange[TWENTY_DOLLARS] = 0;
+        iaExpectedChange[TEN_DOLLARS] = 9;
+        iaExpectedChange[FIVE_DOLLARS] = 1;
+        iaExpectedChange[TWO_DOLLARS] = 3;
+        iaExpectedChange[ONE_DOLLARS] = 0;
+
+        assertArrayEquals(iaExpectedChange, iaActualChange);
+
+        // set cash registry: $221 10 1 1 3 0
+        model.setBillCount(TWENTY_DOLLARS, 10);
+        model.setBillCount(TEN_DOLLARS, 1);
+        model.setBillCount(FIVE_DOLLARS, 1);
+        model.setBillCount(TWO_DOLLARS, 3);
+        model.setBillCount(ONE_DOLLARS, 0);
+
+        // ask for change
+        iaActualChange = model.doChange(11);
+
+        iaExpectedChange[TWENTY_DOLLARS] = 0;
+        iaExpectedChange[TEN_DOLLARS] = 0;
+        iaExpectedChange[FIVE_DOLLARS] = 1;
+        iaExpectedChange[TWO_DOLLARS] = 3;
+        iaExpectedChange[ONE_DOLLARS] = 0;
+
+        assertArrayEquals(iaExpectedChange, iaActualChange);
 
     }
 
@@ -287,7 +323,7 @@ public class CashRegisterModelTest extends Constants {
         model.setBillCount(ONE_DOLLARS, 0);
 
         assertEquals(0, model.getTotalCashValue());
-        
+
         model.setBillCount(TWENTY_DOLLARS, 10);
         model.setBillCount(TEN_DOLLARS, 20);
         model.setBillCount(FIVE_DOLLARS, 30);

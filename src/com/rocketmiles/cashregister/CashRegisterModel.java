@@ -16,7 +16,7 @@ public class CashRegisterModel extends Constants {
         initializeMoney();
 
     }
-    
+
     private void initializeMoney() {
         iaMoney[DENOMINATION_INDEX][ONE_DOLLARS] = 1;
         iaMoney[DENOMINATION_INDEX][TWO_DOLLARS] = 2;
@@ -28,15 +28,15 @@ public class CashRegisterModel extends Constants {
     protected void setBillCount(int iDenominationType, int iQuantity) {
         iaMoney[BILL_COUNT_INDEX][iDenominationType] = iQuantity;
     }
-    
+
     protected void addBills(int iDenominationType, int iQuantity) {
         iaMoney[BILL_COUNT_INDEX][iDenominationType] += iQuantity;
     }
-    
+
     protected void deductBills(int iDenominationType, int iQuantity) {
         iaMoney[BILL_COUNT_INDEX][iDenominationType] -= iQuantity;
     }
-    
+
     protected int getBillCount(int iDenominationType) {
         return iaMoney[BILL_COUNT_INDEX][iDenominationType];
     }
@@ -83,11 +83,10 @@ public class CashRegisterModel extends Constants {
         while (iGreatestDenominationReference < NUM_DENOMINATION_TYPE - 1) {
             for ( ; iIdx < NUM_DENOMINATION_TYPE; iIdx++) {
                 if (iValueTemp >= iaMoney[DENOMINATION_INDEX][iIdx]) {
-                    iaChangeSolution[iIdx] = 0;
                     for (int j = iaMoney[BILL_COUNT_INDEX][iIdx]; (j > 0); j--) {
 
                         if (zUpdateGDR) {
-                            /* Update k to hold the index of the first non-zero value */
+                            /* Update iGreatestDenominationReference to hold the index of the first non-zero value */
                             iGreatestDenominationReference = iIdx;
                             zUpdateGDR = false; /* Only need to be done once */
                         }
@@ -110,9 +109,11 @@ public class CashRegisterModel extends Constants {
                 zFlag = true;
                 break;
             } else {
-                iaChangeSolution[iGreatestDenominationReference]--;
-                iValueTemp += iaMoney[DENOMINATION_INDEX][iGreatestDenominationReference];
-                if (iaChangeSolution[iGreatestDenominationReference] == 0) {
+                if (iaChangeSolution[iGreatestDenominationReference] != 0) {
+                    iaChangeSolution[iGreatestDenominationReference]--;
+                    iValueTemp += iaMoney[DENOMINATION_INDEX][iGreatestDenominationReference];
+                } else {
+                    // if (iaChangeSolution[iGreatestDenominationReference] == 0) {
                     // Move the reference to the next denomination
                     iGreatestDenominationReference++;
                 }
@@ -127,7 +128,7 @@ public class CashRegisterModel extends Constants {
         return iaChangeSolution;
     }
 
-    
+
     /* Computes the total value of the cash register */
     protected void computeTotalCashValue() {
         iTotalCashValue = 0;

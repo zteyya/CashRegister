@@ -83,7 +83,7 @@ public class CashRegisterModel extends Constants {
         while (iGreatestDenominationReference < NUM_DENOMINATION_TYPE - 1) {
             for ( ; iIdx < NUM_DENOMINATION_TYPE; iIdx++) {
                 if (iValueTemp >= iaMoney[DENOMINATION_INDEX][iIdx]) {
-                    for (int j = iaMoney[BILL_COUNT_INDEX][iIdx]; (j > 0); j--) {
+                    for (int j = iaMoney[BILL_COUNT_INDEX][iIdx]; (j > 0) && (iaChangeSolution[iIdx] < iaMoney[BILL_COUNT_INDEX][iIdx]); j--) {
 
                         if (zUpdateGDR) {
                             /* Update iGreatestDenominationReference to hold the index of the first non-zero value */

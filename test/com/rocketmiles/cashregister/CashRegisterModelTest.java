@@ -310,6 +310,24 @@ public class CashRegisterModelTest extends Constants {
 
         assertArrayEquals(iaExpectedChange, iaActualChange);
 
+        // set cash registry: $301 6 8 1 48 0
+        model.setBillCount(TWENTY_DOLLARS, 6);
+        model.setBillCount(TEN_DOLLARS, 8);
+        model.setBillCount(FIVE_DOLLARS, 1);
+        model.setBillCount(TWO_DOLLARS, 48);
+        model.setBillCount(ONE_DOLLARS, 0);
+
+        // ask for change
+        iaActualChange = model.doChange(101);
+
+        iaExpectedChange[TWENTY_DOLLARS] = 0;
+        iaExpectedChange[TEN_DOLLARS] = 8;
+        iaExpectedChange[FIVE_DOLLARS] = 1;
+        iaExpectedChange[TWO_DOLLARS] = 8;
+        iaExpectedChange[ONE_DOLLARS] = 0;
+
+        assertArrayEquals(iaExpectedChange, iaActualChange);
+
     }
 
     @Test
